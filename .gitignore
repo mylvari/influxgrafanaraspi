@@ -1,0 +1,7 @@
+.env
+
+/grafanadata
+/influxdata
+
+# python
+*.pyc
