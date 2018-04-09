@@ -1,0 +1,4 @@
+requests
+alpha_vantage
+pytz
+influxdb

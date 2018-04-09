@@ -24,3 +24,14 @@ services:
       - ./grafanadata:/var/lib/grafana:rw
     environment:
       GF_SECURITY_ADMIN_PASSWORD: "${GF_SECURITY_ADMIN_PASSWORD}"
+  
+  stock-logger:
+    build: stockLogger
+    depends_on:
+      - influxdb
+    environment:
+      ALPHAVANTAGE_APIKEY: "${ALPHAVANTAGE_APIKEY}"
+      INFLUX_URL: "influxdb"
+      INFLUX_USER: "stocklogger"
+      INFLUX_PASSWORD: "${INFLUXDB_USER_PASSWORD}"
+      INFLUX_DB: "stocks"
