@@ -52,5 +52,6 @@ services:
     environment:
       INFLUX_USER: "stocklogger"
       INFLUX_PASSWORD: "${INFLUXDB_USER_PASSWORD}"
+      INFLUX_DB: "stocks"
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
