@@ -53,7 +53,11 @@ if __name__ == "__main__":
         ts = TimeSeries(key=APIKEY)
         for stock in STOCKS_TO_LOG.split(","):
             print("Getting data for {}".format(stock), flush=True)
-            data, meta_data = ts.get_intraday(symbol=stock, interval="1min")
+            try:
+                data, meta_data = ts.get_intraday(symbol=stock, interval="1min")
+            except Exception as e:
+                print("Couldn't get data, {}".format(e))
+                continue
 
             savePointsToInflux(stock, data, meta_data)
             print("Data got for {}".format(stock), flush=True)
