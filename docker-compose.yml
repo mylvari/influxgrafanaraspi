@@ -4,7 +4,7 @@ services:
   influxdb:
     image: influxdb:alpine
     ports:
-      - 8086:8086
+      - 8086
     volumes:
       - ./influxdata:/var/lib/influxdb:rw
     environment:
@@ -44,3 +44,13 @@ services:
       INFLUX_USER: "stocklogger"
       INFLUX_PASSWORD: "${INFLUXDB_USER_PASSWORD}"
       INFLUX_DB: "stocks"
+
+  telegraf:
+    image: telegraf:latest
+    depends_on:
+      - influxdb
+    environment:
+      INFLUX_USER: "stocklogger"
+      INFLUX_PASSWORD: "${INFLUXDB_USER_PASSWORD}"
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
