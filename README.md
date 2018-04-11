@@ -1,7 +1,7 @@
 * putty
 * web browser
 
-## Initiating project
+# Initiating project
 Login to server with ssh
 
 Clone this repository to the server with command
@@ -38,7 +38,7 @@ Should only display
 
 Start the project
 
-    docker-compose up -d --build
+    docker-compose up -d --build grafana
 
 Verify it is running
 
@@ -46,12 +46,11 @@ Verify it is running
 
 Should now display something like
 
-    CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS                                             NAMES
-    ae068215f4df        influxgrafana_stock-logger   "python stockLogger.…"   7 seconds ago       Up 5 seconds                                                          influxgrafana_stock-logger_1
-    6f93310ee70a        grafana/grafana:latest       "/run.sh"                7 seconds ago       Up 5 seconds        0.0.0.0:3000->3000/tcp                            influxgrafana_grafana_1
-    2c36aa77668b        telegraf:latest              "/entrypoint.sh tele…"   7 seconds ago       Up 6 seconds        8092/udp, 8125/udp, 8094/tcp                      influxgrafana_telegraf_1
-    73d35bdc6d77        influxdb:alpine              "/entrypoint.sh infl…"   8 seconds ago       Up 6 seconds        0.0.0.0:32797->8086/tcp                           influxgrafana_influxdb_1
-    c4756ac5a7a9        mailhog/mailhog              "MailHog"                5 hours ago         Up 6 seconds        0.0.0.0:8025->8025/tcp, 0.0.0.0:32796->1025/tcp   influxgrafana_local-mailhog_1
+    CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                                             NAMES
+    980fd8fe1fc6        grafana/grafana:latest   "/run.sh"                5 seconds ago       Up 5 seconds        0.0.0.0:3000->3000/tcp                            influxgrafana_grafana_1
+    bfd268efe09f        mailhog/mailhog          "MailHog"                6 seconds ago       Up 5 seconds        0.0.0.0:8025->8025/tcp, 0.0.0.0:32803->1025/tcp   influxgrafana_local-mailhog_1
+    30f820947b59        influxdb:alpine          "/entrypoint.sh infl…"   6 seconds ago       Up 5 seconds        0.0.0.0:32802->8086/tcp                           influxgrafana_influxdb_1
+
 
 Go with your browser to http://server-ip:3000 and login with user **admin** and password what you entered into GF_SECURITY_ADMIN_PASSWORD in .env
 
@@ -72,3 +71,33 @@ Click bell on left of the screen --> Notification channels --> add channel
 * Add **test@example.com** into email addressess
 * Click send test
 * Navigate with you browser to http://server-ip:8025 and verify that the test email is visible
+
+
+# Using InfluxDb
+Start a shell inside Influxdb container by
+
+    docker-compose exec influxdb influx
+
+
+Use commands from https://docs.influxdata.com/influxdb/v1.5/introduction/getting-started/
+to 
+
+1. Create a new database
+2. Use that database
+3. Write some data into the database
+4. Read some data from database
+
+After done, close the influxdb prompt by commanding ```exit```
+
+Start our data loggers by
+
+    docker-compose up -d --build stock-logger telegraf
+
+Start the influx prompt again with
+
+    docker-compose exec influxdb influx
+
+You should be able to see some data being logged by commanding
+
+    USE data
+    SELECT * FROM stocks LIMIT 10
