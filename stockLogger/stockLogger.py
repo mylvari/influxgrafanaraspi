@@ -55,11 +55,11 @@ if __name__ == "__main__":
             print("Getting data for {}".format(stock), flush=True)
             try:
                 data, meta_data = ts.get_intraday(symbol=stock, interval="1min")
+                savePointsToInflux(stock, data, meta_data)
             except Exception as e:
                 print("Couldn't get data, {}".format(e))
                 continue
 
-            savePointsToInflux(stock, data, meta_data)
             print("Data got for {}".format(stock), flush=True)
 
         time.sleep(20)
