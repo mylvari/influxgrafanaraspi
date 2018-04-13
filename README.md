@@ -6,7 +6,7 @@ Login to server with ssh
 
 Clone this repository to the server with command
 
-    git clone https://github.com/mylvari/influxgrafana
+    git clone https://github.com/eficode/influxgrafana
 
 Navigate into the project
 
