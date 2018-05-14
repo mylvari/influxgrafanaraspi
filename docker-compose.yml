@@ -13,7 +13,7 @@ services:
       INFLUXDB_USER_PASSWORD: "${INFLUXDB_USER_PASSWORD}"
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:5.0.4
     ports:
       - 3000:3000
     depends_on:
