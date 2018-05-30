@@ -1,0 +1,3 @@
+envirophat
+requests
+influxdb
